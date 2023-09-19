@@ -9,8 +9,7 @@ let lastPaintTime = 0;
 let SnakeArr = [
     { x: 13, y: 15 }
 ]
-
-
+food = {x:6, y: 7}
 
 // game function
 function main(current_time) {
@@ -33,9 +32,21 @@ function gameEngine() {
         snakeElement = document.createElement('div')
         snakeElement.style.gridRowStart = e.y;
         snakeElement.style.gridColumnStart = e.x;
-        snakeElement.classList.add('food')
+        if(index === 0){
+            snakeElement.classList.add('head')
+        }
+        else{
+            snakeElement.classList.add('snake')
+        }
+
         board.appendChild(snakeElement)
     })
+    // ? Display the food
+    foodElement = document.createElement('div')
+    foodElement.style.gridRowStart = food.y;
+    foodElement.style.gridColumnStart = food.x;
+    foodElement.classList.add('food')
+    board.appendChild(foodElement)
 }
 
 
