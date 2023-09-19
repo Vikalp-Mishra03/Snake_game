@@ -27,6 +27,7 @@ function gameEngine() {
 
 
     // *Part 2: Display the snake and food
+    // ?Display the snake
     board.innerHTML = "";
     SnakeArr.forEach((e, index) => {
         snakeElement = document.createElement('div')
