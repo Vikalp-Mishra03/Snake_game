@@ -9,7 +9,7 @@ let lastPaintTime = 0;
 let SnakeArr = [
     { x: 13, y: 15 }
 ]
-food = {x:6, y: 7}
+food = { x: 6, y: 7 }
 
 // game function
 function main(current_time) {
@@ -32,10 +32,10 @@ function gameEngine() {
         snakeElement = document.createElement('div')
         snakeElement.style.gridRowStart = e.y;
         snakeElement.style.gridColumnStart = e.x;
-        if(index === 0){
+        if (index === 0) {
             snakeElement.classList.add('head')
         }
-        else{
+        else {
             snakeElement.classList.add('snake')
         }
 
@@ -52,21 +52,34 @@ function gameEngine() {
 
 // main logic start here
 window.requestAnimationFrame(main)
-window.addEventListener('keydown', e=>{
-    inputDir = {x: 0, y:1}  // start the game
+window.addEventListener('keydown', e => {
+    inputDir = { x: 0, y: 1 }  // start the game
     moveSound.play();
-    switch (e.key){
-        case 'ArrowUp' :
+    switch (e.key) {
+        case 'ArrowUp':
             console.log("Arrowup")
+            inputDir.x = 0;
+            inputDir.y = -1;
             break;
-        case 'ArrowDown' :
+
+        case 'ArrowDown':
             console.log("ArrowDown")
+            inputDir.x = 0;
+            inputDir.y = 1;
             break;
-        case 'ArrowLeft' :
+
+        case 'ArrowLeft':
             console.log("ArrowLeft")
+            inputDir.x = -1;
+            inputDir.y = 0;
             break;
-        case 'ArrowRight' :
+
+        case 'ArrowRight':
             console.log("ArrowRight")
+            inputDir.x = 1;
+            inputDir.y = 0;
             break;
+        default:
+            break
     }
 })
