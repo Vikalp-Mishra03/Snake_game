@@ -17,7 +17,7 @@ function main(current_time) {
     if ((current_time - lastPaintTime) / 1000 < 1 / speed) {
         return;
     }
-    console.log(current_time)
+    // console.log(current_time)
     gameEngine();
 }
 
@@ -52,3 +52,21 @@ function gameEngine() {
 
 // main logic start here
 window.requestAnimationFrame(main)
+window.addEventListener('keydown', e=>{
+    inputDir = {x: 0, y:1}  // start the game
+    moveSound.play();
+    switch (e.key){
+        case 'ArrowUp' :
+            console.log("Arrowup")
+            break;
+        case 'ArrowDown' :
+            console.log("ArrowDown")
+            break;
+        case 'ArrowLeft' :
+            console.log("ArrowLeft")
+            break;
+        case 'ArrowRight' :
+            console.log("ArrowRight")
+            break;
+    }
+})
