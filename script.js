@@ -1,8 +1,4 @@
 let inputDir = { x: 0, y: 0 };
-const foodSound = new Audio('music/food.mp3');
-const gameOverSound = new Audio('music/gameover.mp3');
-const moveSound = new Audio('music/move.mp3');
-const musicSound = new Audio('music/music.mp3');
 let speed = 5;
 let score = 0;
 let lastPaintTime = 0;
@@ -12,9 +8,34 @@ let snakeArr = [
 const board = document.getElementById('board');
 let food = { x: 6, y: 7 };
 const scorebox = document.getElementById('scorebox');
-const hiscoreBox = document.getElementById('hiscorebox'); // Assuming you have an element with id 'hiscorebox'
+const hiscoreBox = document.getElementById('hiscorebox');
+const startButton = document.getElementById('startButton');
+const foodSound = new Audio('music/food.mp3');
+const gameOverSound = new Audio('music/gameover.mp3');
+const moveSound = new Audio('music/move.mp3');
+const musicSound = new Audio('music/music.mp3');
 
-// game function
+// Function to play audio
+function playAudio(audioElement) {
+    if (audioElement.paused) {
+        audioElement.play();
+    } else {
+        audioElement.currentTime = 0;
+    }
+}
+
+// Function to start the game
+function startGame() {
+    musicSound.play();
+
+    // Add your game initialization logic here
+    // For example, you can add event listeners, game loop, and more
+    window.requestAnimationFrame(main);
+}
+
+// Add an event listener to the "Start Game" button
+startButton.addEventListener('click', startGame);
+
 function main(current_time) {
     window.requestAnimationFrame(main);
     if ((current_time - lastPaintTime) / 1000 < 1 / speed) {
@@ -24,15 +45,16 @@ function main(current_time) {
     gameEngine();
 }
 
+// Function to check collision
 function isCollide(snake) {
-    // when you bump into yourself
+    // When you bump into yourself
     for (let i = 1; i < snake.length; i++) {
         if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
             return true;
         }
     }
 
-    // when you bump into a wall
+    // When you bump into a wall
     if (snake[0].x >= 18 || snake[0].x <= 0 || snake[0].y >= 18 || snake[0].y <= 0) {
         return true;
     }
@@ -49,7 +71,6 @@ function gameEngine() {
         musicSound.play();
         score = 0;
     }
-
     // If you have eaten the food, increment the score and regenerate the food
     if (snakeArr[0].y === food.y && snakeArr[0].x === food.x) {
         score++;
@@ -60,9 +81,14 @@ function gameEngine() {
             hiscoreBox.innerHTML = "HiScore: " + hiscoreval;
         }
         snakeArr.unshift({ x: snakeArr[0].x + inputDir.x, y: snakeArr[0].y + inputDir.y });
-        let a = 2;
-        let b = 16;
-        food = { x: Math.round(a + (b - a) * Math.random()), y: Math.round(a + (b - a) * Math.random()) };
+
+        // Regenerate the food until it's not on the snake
+        do {
+            let a = 2;
+            let b = 16;
+            food = { x: Math.round(a + (b - a) * Math.random()), y: Math.round(a + (b - a) * Math.random()) };
+        } while (isFoodOnSnake(snakeArr, food));
+
         foodSound.play();
     }
 
@@ -93,9 +119,16 @@ function gameEngine() {
     foodElement.classList.add('food');
     board.appendChild(foodElement);
 }
-
+// Function to check if food is on the snake
+function isFoodOnSnake(snake, food) {
+    for (let i = 0; i < snake.length; i++) {
+        if (snake[i].x === food.x && snake[i].y === food.y) {
+            return true;
+        }
+    }
+    return false;
+}
 // Main logic starts here
-musicSound.play();
 let hiscoreval = parseInt(localStorage.getItem("hiscore")); // Parse as an integer
 if (isNaN(hiscoreval)) {
     hiscoreval = 0;
@@ -104,7 +137,7 @@ if (isNaN(hiscoreval)) {
     hiscoreBox.innerHTML = "HiScore: " + hiscoreval;
 }
 
-window.requestAnimationFrame(main);
+// Event listener for key presses
 window.addEventListener('keydown', e => {
     if (e.key === 'ArrowUp') {
         inputDir.x = 0;
