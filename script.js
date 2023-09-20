@@ -11,6 +11,8 @@ let snakeArr = [
 ];
 const board = document.getElementById('board');
 let food = { x: 6, y: 7 };
+const scorebox = document.getElementById('scorebox');
+const hiscoreBox = document.getElementById('hiscorebox'); // Assuming you have an element with id 'hiscorebox'
 
 // game function
 function main(current_time) {
@@ -23,16 +25,16 @@ function main(current_time) {
 }
 
 function isCollide(snake) {
-    // when u bump in yourself
+    // when you bump into yourself
     for (let i = 1; i < snake.length; i++) {
         if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
-            return true
+            return true;
         }
     }
 
-    // when u bump in wall
+    // when you bump into a wall
     if (snake[0].x >= 18 || snake[0].x <= 0 || snake[0].y >= 18 || snake[0].y <= 0) {
-        return true
+        return true;
     }
 }
 
@@ -50,11 +52,17 @@ function gameEngine() {
 
     // If you have eaten the food, increment the score and regenerate the food
     if (snakeArr[0].y === food.y && snakeArr[0].x === food.x) {
+        score++;
+        scorebox.innerHTML = "Score: " + score;
+        if (score > hiscoreval) {
+            hiscoreval = score;
+            localStorage.setItem("hiscore", JSON.stringify(hiscoreval));
+            hiscoreBox.innerHTML = "HiScore: " + hiscoreval;
+        }
         snakeArr.unshift({ x: snakeArr[0].x + inputDir.x, y: snakeArr[0].y + inputDir.y });
         let a = 2;
         let b = 16;
         food = { x: Math.round(a + (b - a) * Math.random()), y: Math.round(a + (b - a) * Math.random()) };
-        score++;
         foodSound.play();
     }
 
@@ -87,6 +95,15 @@ function gameEngine() {
 }
 
 // Main logic starts here
+musicSound.play();
+let hiscoreval = parseInt(localStorage.getItem("hiscore")); // Parse as an integer
+if (isNaN(hiscoreval)) {
+    hiscoreval = 0;
+    localStorage.setItem("hiscore", JSON.stringify(hiscoreval));
+} else {
+    hiscoreBox.innerHTML = "HiScore: " + hiscoreval;
+}
+
 window.requestAnimationFrame(main);
 window.addEventListener('keydown', e => {
     if (e.key === 'ArrowUp') {
