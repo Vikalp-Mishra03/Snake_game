@@ -6,20 +6,22 @@
 }
 
 .body {
-    background: url('img/bg.jpg');
+    /* background: url('img/bg-removebg-preview.png'); */
     min-height: 100vh;
     background-size: 100vw 100vh;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: radial-gradient(yellow, green);
 }
 
 #board {
-    background: linear-gradient(green, yellow);
+    /* background: radial-gradient(yellow, green); */
+
     width: 90vmin;
     height: 92vmin;
-    border: 2px solid #7a9c00;
+    border: 0.5px solid #7a9c00;
     display: grid;
     grid-template-columns: repeat(18, 1fr);
     grid-template-rows: repeat(18, 1fr);
@@ -52,6 +54,7 @@
     font-weight: bold;
     font-family: 'New Tegomin', serif;
 }
+
 #hiscorebox {
     position: absolute;
     top: 50px;
@@ -59,4 +62,37 @@
     font-size: 39px;
     font-weight: bold;
     font-family: 'New Tegomin', serif;
+}
+
+#startButton {
+    position: absolute;
+    top: 0;
+    background-color: #c2fbd7;
+    border-radius: 100px;
+    box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset, rgba(44, 187, 99, .15) 0 1px 2px, rgba(44, 187, 99, .15) 0 2px 4px, rgba(44, 187, 99, .15) 0 4px 8px, rgba(44, 187, 99, .15) 0 8px 16px, rgba(44, 187, 99, .15) 0 16px 32px;
+    color: green;
+    cursor: pointer;
+    display: inline-block;
+    font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
+    padding: 7px 20px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 250ms;
+    border: 0;
+    font-size: 16px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+#startButton:hover {
+    box-shadow: rgba(44, 187, 99, .35) 0 -25px 18px -14px inset, rgba(44, 187, 99, .25) 0 1px 2px, rgba(44, 187, 99, .25) 0 2px 4px, rgba(44, 187, 99, .25) 0 4px 8px, rgba(44, 187, 99, .25) 0 8px 16px, rgba(44, 187, 99, .25) 0 16px 32px;
+    transform: scale(1.05) rotate(-1deg);
+}
+
+.image{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 50%;;
 }
